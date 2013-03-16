@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
+
+  <title>todo.txt Text Driven Interface for Dropbox (Beta)</title>
+  <style type="text/css">
+/*<![CDATA[*/
+
+  body {
+        font-family: sans-serif;
+        font-size: 75%;
+        margin:0;
+  }
+  #topmatter {
+        background: #f0f0ff;
+    }
+        table.nav {
+    width:100%;
+    background:white;
+    border: 1px solid #d0d0ff;
+  }
+  table.nav td{
+    vertical-align: top;
+  }
+  table.nav tr {
+    height: 48px;
+  }
+  #helptxt p {
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+  }
+  #helptxt  {
+        font-size: 133%;
+  }
+  #todotxt, #welcome, #helptxt {
+        display:none;
+  }
+  #todotxt, #footer {
+        clear:left;
+        padding:3px;
+
+  }
+  #footer {
+    background:white;
+  }
+  input, textarea {
+  box-shadow: 1px 1px 5px #ccc inset;
+  border: none;
+  padding: 0em;
+  }
+  #dropboxfail {
+       display:none;
+   }
+  #t1 {
+  width: 100%;
+  height: 450px;
+  outline: none;
+  font-size: 13px;
+  padding: 0em;
+  font-family: consolas, monospace;
+  }
+  #file_path {
+        font-family: sans-serif;
+        color: gray;
+
+  }
+  .code {
+        font-family: monospace;
+  }
+  .filter {
+        display: inline;
+        width: 28%;
+        margin-top: .5em;
+        margin-bottom: .5em;
+        margin-left: .5em; 
+        margin-right: .5em;
+  }
+  #filter {
+        width: 100%;
+        margin-bottom:5px;
+    font-family: consolas, monospace;
+  }
+  .saving_msg {
+        font-family: sans-serif;
+        color: gray;
+        font-style: italic;
+        text-align: center;
+        margin-top:0;
+  }
+  .error_msg {
+        font-family: sans-serif;
+        color: red;
+        font-weight: bold;
+        margin: 0px;
+  }
+  .action_msg {
+        font-family: sans-serif;
+        color: blue;
+        margin: 0px;
+  }
+  #sortbuttons {
+        
+  }
+  /*]]>*/
+  </style>
+<link rel="shortcut icon" href="http://todotxttdi.com/favicon.ico" /> 
+<script src="js/1.8.2.jquery.min.js" type="text/javascript"></script>
+<script src="js/date-en-AU.js" type="text/javascript"></script>
+<script src="js/dropbox.min.js" type="text/javascript"></script>
+<script src="todotxttdi_key.js" type="text/javascript"></script>
+<script src="todotxttdi.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+  <table class="nav">
+    <tr>
+      <td style="width:40px">
+          <img  src="todotxttdi32.png" />
+	  </td>
+
+      <td style="width:33%">
+		  Todo.txt Text Driven Interface for Dropbox (Beta)
+      </td>
+
+      <td style="width:33%">
+        <p class="saving_msg" id="saving_status_msg">&nbsp;</p>
+      </td>
+
+      <td style="width:33%">
+        <div style="float:right;" id="logout">
+          &nbsp;
+        </div>
+
+        <div style="float:right;" id="helpdesk">
+          <img src="cute_ball_help.png" id="helplink" title="Show Help"/>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div id="todotxt">
+    <div id="topmatter">
+    <div style="float:left">
+      <p style="margin-top: 1px; margin-bottom:1px;" id="sortbuttons"><button title="Sort alphanumerically" id=
+      "sortalphanumeric">A-Z</button> <button title="Sort by creation date yyyy-mm-dd" id="sortbycreation">Creation</button>
+      <button title="Sort by priority (X)" id="sortbypriority">Priority (X)</button> <button title="Sort by context @" id=
+       "sortbycontext">Context @</button> <button title="Sort sort by project +" id="sortbyproject">Project +</button>
+      <button title="Sort by hashtag #" id="sortbyhashtag">Hashtag #</button> 
+      </p>
+    </div>
+
+    <div style="clear:left;float:left">
+      <p style="margin-top: 1px; margin-bottom:1px;"><span class="error_msg" id=
+      "duplid_error_msg"></span>&nbsp;<span class="action_msg" id=
+      "after_msg"></span>&nbsp;<span class="error_msg" id="filter_error_msg"></span></p>
+    </div>
+
+    <div style="clear:left;width:100%">
+      <input class="filter" autocomplete="on" id="filter1" placeholder=
+      "The first filter." /> <input class="filter" autocomplete="on" id="filter2"
+      placeholder="Another filter" /> <input class="filter" autocomplete="on" id=
+      "filter3" placeholder="And another filter!" />
+    </div>
+    </div>
+    <textarea id="t1" placeholder="Type your Todo.txt here">
+</textarea>
+  </div>
+
+  <div id="dropboxfail" style="clear: both; font-size: 150%;">
+    <h2 style="text-align:center; margin-top:10em;">Oops, can't connect to Dropbox</h2>
+    <p id="reportedmsg" style="text-align:center; color:gray;"></p>
+    <p style="text-align:center; margin-top:3em;">Reload this page to reconnect!</p>
+  </div>
+
+    <div id="welcome" style="clear: both; font-size: 150%;">
+    <img style="margin-top: 1em; margin-left:auto; margin-right: auto; display:block;" src="todotxttdi128.png" />
+    <h2 style="text-align:center; margin-top:1em;">Welcome</h2>
+    <p id="reportedmsg" style="text-align:center; margin-left:auto; margin-right: auto; width:550px; color:gray;">
+    Todo.txt Text Driven Interface for Dropbox (Beta)<br /><br />Your Todo.txt synchronised on your browsers <small><em>(except IE)</em></small> at home and work. 
+    Todo.txt is just a text file, yet you can sort and filter to your heart's content. Sort on your extension tags. Filter on tasks due today or earlier. Enter due dates like <span class="code">due:fri;</span> or <span class="code">due:+7;</span>. Even without a due date, be reminded when when all a task's predecessor tasks are completed. <br /><br />Click the button below to ask Dropbox to authorise this browser to create and/or 
+    update a Todo.txt file in a specially created /Apps/todotxttdi folder in your Dropbox<br /><br /><button  id="connecttodropbox">Ask Dropbox to authorise this
+    browser.</button><br /><br /><small>Visit <a target="moreinfo" href="https://dropbox.com">Dropbox.com</a><br />More information about <a  target="moreinfo" href="http://todotxt.com">Todo.txt</a><br />More information about App folder authorisation using <a  target="moreinfo" href="https://www.dropbox.com/developers/core/gs">Dropbox's Core API</a><br />Visit the author's blog <a id="drplink" href=
+    "http://davidpratten.com"  target="moreinfo" >davidpratten.com</a></small></p>
+    
+  </div>
+
+  
+  <div id="helptxt" style="clear: both">
+    <h2>todotxttdi Dropbox application</h2>
+
+    <p>todotxttdi (Todo.txt Text Driven Interface) is a self-contained html5 application
+    hosted entirely in your Chrome, Firefox, Safari, or Opera browser. When authorised by you,
+    todotxttdi creates a <a href="http://todotxt.com/">Todo.txt</a> file in your Dropbox,
+    and automatically saves your changes. todotxttdi supports the full Todo.txt <a href=
+    "https://github.com/ginatrapani/todo.txt-cli/wiki/The-Todo.txt-Format">specification</a>,
+    with some useful extensions.</p>
+
+    <h2>The "Zen" of todotxttdi</h2>
+
+    <p>todotxttdi is guided by the following principles:</p>
+
+    <ul>
+      <li>The Todo.txt specification is fully supported</li>
+
+      <li>The user interface is driven by the user's text. (Text Driven Interface).
+      Changing the content of your Todo.txt file may update the user interface so that
+      relevant capabilities are available.</li>
+
+      <li>The Todo.txt file is <b>always</b> just a text file and filtering should not
+      hide part of it.</li>
+
+      <li>The Todo.txt file is available to be accessed from multiple locations,
+      computers and browsers with automatic handover from one to the next. Reloading the
+      Todo.txt file will return you to where you left off.</li>
+    </ul>
+
+    <h2>Authorisation with Dropbox</h2>
+
+    <p>Once the application page is loaded, Dropbox will ask you if you authorise the
+    application. If you authorise todotxttdi, Dropbox gives your browser access to just
+    one folder: <span class="code">/Apps/todotxttdi</span> in your Dropbox. You may close
+    your browser and reload the application without having to reauthorise it. To revoke
+    authorisation for your browser, click the "Disconnect" button.</p>
+
+    <p>The todotxtapi application will only work if your browser has an authorised and
+    active connection with dropbox.com.</p>
+
+    <h2>Todo.txt editor</h2>
+
+    <h2>Sorting</h2>
+
+    <p>todotxttdi sorts lines according to the Todo.txt specification. By default,
+    todotxttdi provides buttons to sort alphabetically (A-Z), by creation date, by
+    priority, by context code, and project code. You may also sort by hashtags if you use
+    them. If a line contains multiple codes, the sort is based on the first code
+    found.</p>
+
+    <p>todotxttdi also supports the sorting by extension tags such as "<span class=
+    "code">due:</span>". When an extension tag is detected, a sort button is added for
+    your use.</p>
+
+    <p>Sorting the Todo.txt file does not trigger a save to Dropbox. This is because each
+    line in a Todo.txt file is independent, and sorting does not change the information
+    that you have entered.</p>
+
+    <h2>Filtering</h2>
+
+    <p>todotxttdi places the lines that match a filter at the top of the Todo.txt file
+    and rather than hiding the non-matching lines, it shows them after two blank lines.
+    This preserves the spirit of Todo.txt - that it is always just a text file.</p>
+
+    <p>todotxttdi allows you to enter up to three independent filters. Filters are
+    applied simply by clicking in the filter field. The currently applied filter has a
+    green background. Filters are remembered by your browser and are not stored in
+    Dropbox.</p>
+
+    <p>Each filter consists of one or more space separated items. For a Todo.txt line to
+    match a filter, it must match every space separated filter item. If a filter item is
+    preceded by a "-" sign, this means a line will match if it doesn't contain this item.
+    If a filter item contains multiple sub-items separated by "|" then a line will match
+    if it matches any one of the sub-items.</p>
+
+    <p>You may use a "~" prefix to temporarily disable a filter item so you don't need to
+    retype it later.</p>
+
+    <p>If you wish to use one of the following characters in a filter you will need to
+    precede them with a "<span class="code">\</span>" character. Use "<span class=
+    "code">\+</span>" instead of "<span class="code">+</span>", "<span class=
+    "code">\*</span>" instead of "<span class="code">*</span>", ditto for "<span class=
+    "code">\.</span>", "<span class="code">\(</span>", and "<span class=
+    "code">\)</span>". And yes, this means, if you care, you may use regular expressions
+    in the filters.</p>
+
+    <p>Prior to applying each filter, todotxttdi analyses all <span class=
+    "code">due:yyyy-mm-dd</span> dates and adds a hashtag: "<span class=
+    "code">&nbsp;#past</span>", "<span class="code">&nbsp;#today</span>", or
+    "<span class="code">&nbsp;#tomorrow</span>" as appropriate. These may be filtered
+    against. For example: the filter "<span class="code">#past|#today</span>" will filter
+    for all current Todo.txt lines.</p>
+
+    <p>Filtering the Todo.txt file does not trigger a save to Dropbox. This is because
+    each line in a Todo.txt file is independent, and filtering (like sorting) does not
+    change the information that you have entered.</p>
+
+    <h2>Editing</h2>
+
+    <p>Typing changes into the text area will cause it to be saved to the Todo.txt file
+    the next time you pause your typing.</p>
+
+    <p>todotxttdi greatly simplifies entering dates. The entry of both "task completion"
+    <span class="code">x yyyy-mm-dd</span> and "due dates" <span class=
+    "code">due:yyyy-mm-dd</span> are simplified. Dates may be entered as text (e.g.
+    <span class="code">due:today;</span>, <span class="code">due:tomorrow;</span>,
+    <span class="code">due:+4;</span>, <span class="code">due:+4d;</span>, <span class=
+    "code">due:monday;</span>), in each context the dates will be interpreted as soon as
+    the '<span class="code">;</span>' is typed. For example a completed task can be
+    entered as <span class="code">x yesterday;</span> and a reminder set as <span class=
+    "code">due:next thursday;</span> The kinds of dates that are understood is defined
+    here <a href="http://www.datejs.com/">http://www.datejs.com/</a></p>
+
+    <h2>Task dependency (precedence)</h2>
+
+    <p>A task that can't be started until another task is complete may include an tag of
+    <span class="code">after:xxxx</span> where the task on which this task depends
+    contains a corresponding <span class="code">id:xxxx</span> tag.</p>
+
+    <p>Every <span class="code">id:</span> tag must be unique.</p>
+
+    <p>As soon as all tasks on which a task depends are deleted or marked as completed,
+    the now 'ready to run' task will be highlighted in the user interface.</p>
+
+    <h2>Privacy Policy</h2>
+
+    <p>The only information that is recorded by the todotxttdi.com website is the fact
+    that the (empty) application page was requested. After your browser loads the (empty)
+    todotxttdi application page from the todotxttdi.com website, the browser's only
+    connection is with dropbox.com. Your browser retrieves your Todo.txt and saves it
+    using a secure (https) connection with Dropbox.com. While editting, your data remains
+    entirely in your browser.</p>
+  </div>
+  <div id="footer">
+  A <a id="todotxtlink" href="http://todotxt.com"  target="todotxt" name="todotxtlink">Todo.txt</a> client for <a href="https://dropbox.com">Dropbox</a>.
+
+  <div style="float: right">
+    For non-IE browsers. Copyright 2013 <a id="drplink" href=
+    "http://davidpratten.com"  target="drp">David Pratten</a>. The code is available on <a href="https://github.com/DavidPratten/todotxttdi">Github</a> under an <a href="http://opensource.org/licenses/MIT">MIT license</a>.
+  </div>
+  </div>
+</body>
+</html>

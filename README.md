@@ -1,8 +1,16 @@
 ### todotxttdi Dropbox application
 
-todotxttdi (Todo.txt Text Driven Interface) is a self-contained html5 Todo.txt client hosted entirely in your Chrome, Firefox, Safari, or Opera browser. When authorised by you, todotxttdi creates a Todo.txt file in your Dropbox, and automatically saves your changes. todotxttdi supports the full Todo.txt [specification](https://github.com/ginatrapani/todo.txt-cli/wiki/The-Todo.txt-Format), with some useful extensions.
+todotxttdi (Todo.txt Text Driven Interface) is a self-contained html5 [Todo.txt](http://todotxt.com) client hosted entirely in your Chrome, Firefox, Safari, or Opera browser. When authorised by you, todotxttdi creates a Todo.txt file in your Dropbox, and automatically saves your changes. todotxttdi supports the full Todo.txt [specification](https://github.com/ginatrapani/todo.txt-cli/wiki/The-Todo.txt-Format), with some useful extensions.
 
 You may use this client at any time by visiting [http://todotxttdi.com/](http://todotxttdi.com/)
+
+###Standing on the shoulders of giants
+
+Todotxttdi uses the following libraries.
+
+* [jQuery](http://jquery.com)
+* [dropbox.js](https://github.com/dropbox/dropbox-js)
+* [date-js](http://www.datejs.com/)
 
 ### The "Zen" of todotxttdi
 
@@ -58,3 +66,28 @@ A task that can't be started until another task is complete may include an tag o
 Every `id:` tag must be unique.
 
 As soon as all tasks on which a task depends are deleted or marked as completed, the now 'ready to run' task will be highlighted in the user interface.
+
+###License
+
+This project/software is licensed under the MIT License.
+
+Copyright (C) 2013 David Pratten
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
