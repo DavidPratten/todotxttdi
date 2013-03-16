@@ -58,7 +58,3 @@ A task that can't be started until another task is complete may include an tag o
 Every `id:` tag must be unique.
 
 As soon as all tasks on which a task depends are deleted or marked as completed, the now 'ready to run' task will be highlighted in the user interface.
-
-####Privacy Policy
-
-The only information that is recorded by the todotxttdi.com website is the fact that the (empty) application page was requested. After your browser loads the (empty) todotxttdi application page from the todotxttdi.com website, the browser's only connection is with dropbox.com. Your browser retrieves your Todo.txt and saves it using a secure (https) connection with Dropbox.com. While editting, your data remains entirely in your browser.
