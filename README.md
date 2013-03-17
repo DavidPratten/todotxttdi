@@ -57,7 +57,7 @@ Filtering the Todo.txt file does not trigger a save to Dropbox. This is because 
 
 Typing changes into the text area will cause it to be saved to the Todo.txt file the next time you pause your typing.
 
-todotxttdi greatly simplifies entering dates. The entry of both task completion:` x yyyy-mm-dd`" and due dates: `due:yyyy-mm-dd` are simplified. Dates may be entered as text (e.g. `due:today;`, `due:tomorrow;`, `due:+4;`, `due:+4d;`, `due:monday;`), in each context the dates will be interpreted as soon as the ';' is typed. For example a completed task can be entered as x yesterday; and a reminder set as `due:next thursday;` The kinds of dates that are understood is defined here [http://www.datejs.com/](http://www.datejs.com/)
+todotxttdi simplifies entering dates. The entry of both task completion:` x yyyy-mm-dd`" and due dates: `due:yyyy-mm-dd` are simplified. Dates may be entered as text (e.g. `due:today;`, `due:tomorrow;`, `due:+4;`, `due:+4d;`, `due:monday;`), in each context the dates will be interpreted as soon as the ';' is typed. For example a completed task can be entered as x yesterday; and a reminder set as `due:next thursday;` The kinds of dates that are understood is defined here [http://www.datejs.com/](http://www.datejs.com/)
 
 ####Task dependency (precedence)
 
