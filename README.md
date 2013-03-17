@@ -61,6 +61,8 @@ todotxttdi simplifies entering dates. The entry of both task completion:` x yyyy
 
 ####Task dependency (precedence)
 
+todotxtdti will alert you when a task is 'ready to run'.
+
 A task that can't be started until another task is complete may include an tag of `after:xxxx` where the task on which this task depends contains a corresponding `id:xxxx` tag.
 
 Every `id:` tag must be unique.
