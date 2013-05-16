@@ -38,6 +38,7 @@ $(document).ready(function () {
     todotxttdi.client = null;
     todotxttdi.versionTag = null;
     todotxttdi.nondirtykeys = [16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 93, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 144, 145, 233]; //see http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+    todotxttdi.alerthashtag = / #(today|past|tomorrow)\b/g;
 
     $.fn.setCursor = function (newPosition) {
         return this.each(function () {
@@ -117,7 +118,7 @@ $(document).ready(function () {
 
     function checkalerts(inString) {
         var myString = inString,
-            myRegexp = / #(today|past|tomorrow)\b/g,
+            myRegexp = todotxttdi.alerthashtag,
             todaystr = Date.parse("today").toString("yyyy-MM-dd"),
             tomorrowstr = Date.parse("tomorrow").toString("yyyy-MM-dd"),
             ContentArr = null,
@@ -511,7 +512,8 @@ $(document).ready(function () {
                     return;
                 }
                 if (stat.versionTag === todotxttdi.versionTag) {
-                    todotxttdi.client.writeFile("todo.txt", $("#t1").val(), function (error, stat) {
+                    // save after removing the alert hashtags
+                    todotxttdi.client.writeFile("todo.txt", $("#t1").val().replace(todotxttdi.alerthashtag, ""), function (error, stat) {
                         if (error) {
                             dropBoxFailError(error);
                             return;
