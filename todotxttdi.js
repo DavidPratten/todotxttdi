@@ -422,7 +422,7 @@ $(document).ready(function () {
     }
 
     function checkonline(msg) {
-        todotxttdi.client.stat("todo.txt", function (error, stat) {
+        todotxttdi.client.stat($("#filename_input").val(), function (error, stat) {
             if (error) {
                 dropBoxFailError(error);
                 return;
@@ -431,10 +431,10 @@ $(document).ready(function () {
     }
 
     function loadit() {
-        todotxttdi.client.readFile("todo.txt", null, function (error, data, stat) {
+        todotxttdi.client.readFile($("#filename_input").val(), null, function (error, data, stat) {
             if (error) {
                 if (error.response.error === "File has been deleted" || error.response.error === "File not found") {
-                    todotxttdi.client.writeFile("todo.txt", "", function (error, stat) {
+                    todotxttdi.client.writeFile($("#filename_input").val(), "", function (error, stat) {
                         if (error) {
                             dropBoxFailError(error);
                             return;
@@ -506,14 +506,14 @@ $(document).ready(function () {
     function saveit() {
         // save to dropbox 
         if ($("#t1").val() !== "" && todotxttdi.client.isAuthenticated()) {
-            todotxttdi.client.stat("todo.txt", function (error, stat) {
+            todotxttdi.client.stat($("#filename_input").val(), function (error, stat) {
                 if (error) {
                     dropBoxFailError(error);
                     return;
                 }
                 if (stat.versionTag === todotxttdi.versionTag) {
                     // save after removing the alert hashtags
-                    todotxttdi.client.writeFile("todo.txt", $("#t1").val().replace(todotxttdi.alerthashtag, ""), function (error, stat) {
+                    todotxttdi.client.writeFile($("#filename_input").val(), $("#t1").val().replace(todotxttdi.alerthashtag, ""), function (error, stat) {
                         if (error) {
                             dropBoxFailError(error);
                             return;
@@ -550,6 +550,8 @@ $(document).ready(function () {
     if (localStorage.getItem("filter2")) {$("#filter2").val(localStorage.getItem("filter2")); }
     if (localStorage.getItem("filter3")) {$("#filter3").val(localStorage.getItem("filter3")); }
     if (localStorage.getItem("currFilter")) {todotxttdi.currFilter = localStorage.getItem("currFilter"); }
+
+    $("#filename_input").change(loadit);
 
     //auth to dropbox
     $("#connecttodropbox").click(function (event) {
